@@ -1,29 +1,33 @@
 myAppControllers.controller('adminStudentsCtrl', ['$scope', 'syncData', '$http',
     function ($scope, syncData, $http) {
 
-        $scope.curStudentKey = null;
+        $scope.students = syncData('app/students', 0);
+        $scope.p_students = syncData('pending/students', 0);
+
+        $scope.maxSize = 4;
         $scope.curStudent = null;
+        $scope.bigTotalItems = null;
+
+        $scope.students.$on("loaded", function (snapshot) {
+            console.log(Object.keys(snapshot).length);
+            $scope.bigTotalItems = Object.keys(snapshot).length;
+        });
+
+        $scope.bigCurrentPage = 1;
 
         $scope.curStudentNav = function (key) {
             $scope.curStudentKey = key;
             $scope.curStudent = $scope.students.$child(key);
-            console.log(key);
         };
 
         /****************************************************************************************/
 
-        $scope.students = syncData('app/students', 0);
-        $scope.p_students = syncData('pending/students', 0);
 
-        $scope.maxSize = 5;
         $scope.setPage = function (pageNo) {
             $scope.currentPage = pageNo;
         };
 
-        $scope.bigTotalItems = 17;
-        $scope.bigCurrentPage = 1;
-
-        $scope.hello = function(key) {
+        $scope.hello = function (key) {
             return $scope.students.$child(key);
         }
 
@@ -55,10 +59,3 @@ myAppControllers.controller('adminStudentsCtrl', ['$scope', 'syncData', '$http',
         /****************************************************************************************/
 
     }]);
-
-
-myAppControllers.filter('myFilter', function() {
-    return function(input, par1) {
-        return input.slice((par1-1)*5, par1*5);
-    };
-});
