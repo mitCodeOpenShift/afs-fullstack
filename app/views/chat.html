@@ -19,8 +19,8 @@
 <tabset>
 
     <tab ng-controller="adminSubjectsCtrl" heading="Subjects">
-        <label for="subjectsEditable">Edit</label><input type="checkbox" ng-model="subjectsEditable"
-                                                         id="subjectsEditable">
+        <label for="subjectsEditable">Edit</label>
+        <input type="checkbox" ng-model="subjectsEditable" id="subjectsEditable">
 
         <div ng-show="subjectsEditable">
             <h2>Add Subject:</h2>
@@ -44,27 +44,138 @@
         <button ng-show="subjectsEditable" class="btn btn-success" ng-click="saveSubjects()">Save</button>
     </tab>
 
-    <tab ng-controller="adminStudentsCtrl" heading="Students">
-        <form>
-            <input type="text" placeholder="Name" nd-model="newStudent.name"><br>
-            <input type="text" placeholder="Middle name" ng-model="newStudent.midname"><br>
-            <input type="text" placeholder="Surname" ng-model="newStudent.surname"><br>
-            <input type="email" placeholder="Email" ng-model="newStudent.email"><br>
+    <tab ng-controller="adminStudentsCtrl" heading="Students" class="container-fluid">
 
-            <div class="btn-group">
-                <button type="button" class="btn btn-default" ng-model="newStudent.sex" btn-radio="'male'">Male</button>
-                <button type="button" class="btn btn-default" ng-model="newStudent.sex" btn-radio="'female'">Female
-                </button>
+        <div class="row">
+            <div class="col-sm-4">
+                <ul class="nav nav-pills nav-stacked">
+                    <li ng-repeat="(key, student) in students" ng-class="{active : key == curStudentKey }">
+                        <a ng-click="curStudentNav(key)">{{student.fname}} {{student.surname}}</a>
+                    </li>
+                </ul>
             </div>
-            <br>
-            <input type="text" size="10" maxlength="10" placeholder="EGN" ng-model="newStudent.egn"><br>
-            <input type="number" placeholder="Student Number" ng-model="newStudent.studentNumber"><br>
-            <input type="text" placeholder="City" ng-model="newStudent.city"><br>
-            <input type="text" placeholder="Address" ng-model="newStudent.city"><br>
-            <input type="tel" placeholder="Mobile" ng-model="newStudent.mobile">
+            <div class="col-sm-4" ng-if="curStudent">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <label for="curStudent.fname" class="col-sm-3 control-label">Name</label>
 
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" ng-model="curStudent.fname"
+                                   ng-readonly="curStudentReadonly" id="curStudent.fname">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="curStudent.midname" class="col-sm-3 control-label">Middle Name</label>
 
-        </form>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" ng-model="curStudent.midname"
+                                   ng-readonly="curStudentReadonly" id="curStudent.midname">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" ng-model="curStudent.surname"
+                               ng-readonly="curStudentReadonly">
+                    </div>
+                    <div class="form-group btn-group">
+                        <button type="button" class="btn btn-default" ng-model="curStudent.sex" btn-radio="'male'">Male
+                        </button>
+                        <button type="button" class="btn btn-default" ng-model="curStudent.sex" btn-radio="'female'">
+                            Female
+                        </button>
+                    </div>
 
+                </div>
+            </div>
+        </div>
+        <pagination total-items="studentsLength" page="bigCurrentPage" max-size="2" class="pagination-sm"
+                    boundary-links="true" rotate="false" num-pages="numPages"></pagination>
+
+        <h2>Add Student</h2>
+
+        <div class="row">
+            <div class="col-sm-3">
+                <form class="form-horizontal">
+                    <h3>Student</h3>
+
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Name"
+                               ng-model="newStudent.fname">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Middle Name" ng-model="newStudent.midname">
+                    </div>
+                    <div class="form-group"><input type="text" class="form-control" placeholder="Surname"
+                                                   ng-model="newStudent.surname">
+                    </div>
+                    <div class="form-group"><input type="email" class="form-control" placeholder="Email"
+                                                   ng-model="newStudent.email">
+                    </div>
+
+                    <div class="form-group btn-group">
+                        <button type="button" class="btn btn-default" ng-model="newStudent.sex" btn-radio="'male'">Male
+                        </button>
+                        <button type="button" class="btn btn-default" ng-model="newStudent.sex" btn-radio="'female'">
+                            Female
+                        </button>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" size="10" maxlength="10" placeholder="EGN"
+                               ng-model="newStudent.egn">
+                    </div>
+                    <div class="form-group">
+                        <input type="number" class="form-control" placeholder="Student Number"
+                               ng-model="newStudent.studentNumber">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="City"
+                               ng-model="newStudent.city">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Address"
+                               ng-model="newStudent.address">
+                    </div>
+                    <div class="form-group">
+                        <input type="tel" class="form-control" placeholder="Mobile"
+                               ng-model="newStudent.mobile">
+                    </div>
+                    <div class="form-group">
+                        <button type="button" class="btn btn-success clea" ng-click="addStudent()">Add Student</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="col-sm-4">
+                <h3>Parents</h3>
+
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Name" ng-model="newParent.name">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Middle Name" ng-model="newParent.midname">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Surname" ng-model="newParent.surname">
+                    </div>
+
+                    <div class="form-group btn-group">
+                        <button type="button" class="btn btn-default" ng-model="newParent.sex" btn-radio="'male'">Male
+                        </button>
+                        <button type="button" class="btn btn-default" ng-model="newParent.sex" btn-radio="'female'">
+                            Female
+                        </button>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="City" ng-model="newParent.city">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Address" ng-model="newParent.city">
+                    </div>
+                    <div class="form-group">
+                        <input type="tel" class="form-control" placeholder="Mobile" ng-model="newParent.mobile">
+                    </div>
+                </form>
+            </div>
+        </div>
     </tab>
 </tabset>

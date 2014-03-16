@@ -6,20 +6,18 @@ myAppControllers.controller('adminSubjectsCtrl', ['$scope', 'syncData', '$http',
 
     // constrain number of messages by limit into syncData
     // add the array into $scope.messages
-    $scope.subjects = syncData('subjects', 10);
+    $scope.subjects = syncData('app/subjects', 0);
+    $scope.p_subjects = syncData('pending/subjects', 0);
 
     // add new messages to the list
     $scope.addSubject = function() {
         console.log($scope.newSubject);
         if ($scope.newSubject !== null) {
-/*            $scope.subjects.$add({code: $scope.newSubject.code, caption: $scope.newSubject.caption});
-            //    $scope.subjects[$scope.newSubject.code] = {caption: $scope.newSubject.caption};
-//            $scope.subjects.$save();
-
-*/
-            $http.post('/api/addSubject', $scope.newSubject).success(function(newSub){
+            $scope.p_subjects.$add({code: $scope.newSubject.code, caption: $scope.newSubject.caption});
+/*            $http.post('/subjects/add', $scope.newSubject).success(function(newSub){
                 console.log(newSub);
             })
+*/
             $scope.newSubject = null;
         }
     };
