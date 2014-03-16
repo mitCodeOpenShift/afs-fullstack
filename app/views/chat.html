@@ -31,7 +31,7 @@
 
 
         <ul id="subjects" ng-show="subjects">
-            <li ng-repeat="subject in subjects | orderByPriority | reverse">
+            <li ng-repeat="subject in subjects">
                 <div>
                     <input placeholder="CODE" ng-model="subject.code" ng-disabled="!subjectsEditable">
                     <input placeholder="CAPTION" ng-model="subject.caption" ng-disabled="!subjectsEditable">
@@ -49,8 +49,10 @@
         <div class="row">
             <div class="col-sm-4">
                 <ul class="nav nav-pills nav-stacked">
-                    <li ng-repeat="(key, student) in students" ng-class="{active : key == curStudentKey }">
-                        <a ng-click="curStudentNav(key)">{{student.fname}} {{student.surname}}</a>
+                    <li ng-repeat="student in students | orderByPriority | myFilter:bigCurrentPage"
+                        ng-class="{active : student.$id == curStudentKey }">
+                        <a ng-click="curStudentNav(student.$id)">{{student.fname}} {{student.surname}}</a>
+
                     </li>
                 </ul>
             </div>
@@ -87,9 +89,9 @@
                 </div>
             </div>
         </div>
-        <pagination total-items="studentsLength" page="bigCurrentPage" max-size="2" class="pagination-sm"
+        <pagination total-items="bigTotalItems" page="bigCurrentPage" max-size="maxSize" class="pagination-sm"
                     boundary-links="true" rotate="false" num-pages="numPages"></pagination>
-
+        <pre>Page: {{bigCurrentPage}} / {{numPages}}</pre>
         <h2>Add Student</h2>
 
         <div class="row">
