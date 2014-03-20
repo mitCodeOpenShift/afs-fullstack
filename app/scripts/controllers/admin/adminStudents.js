@@ -8,10 +8,17 @@ myAppControllers.controller('adminStudentsCtrl', ['$scope', 'syncData', '$http',
         $scope.curStudent = null;
         $scope.bigTotalItems = null;
 
-        $scope.students.$on("loaded", function (snapshot) {
+ /*       $scope.students.$on("loaded", function (snapshot) {
             console.log(Object.keys(snapshot).length);
             $scope.bigTotalItems = Object.keys(snapshot).length;
         });
+        */
+
+        $scope.students.$on("value", function (snapshot) {
+
+            $scope.bigTotalItems = $scope.students.$getIndex().length;
+        });
+
 
         $scope.bigCurrentPage = 1;
 
