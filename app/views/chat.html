@@ -1,117 +1,13 @@
-<h2>Chat</h2>
-
-<div class="row marketing">
-    <div ng-repeat="thing in awesomeThings">
-        <h4>{{thing.name}}</h4>
-
-        <p>{{thing.info}}</p>
-    </div>
-</div>
-
-<div class="row marketing">
-    <div ng-repeat="thing in stuff">
-        <h4>{{thing.name}}</h4>
-
-        <p>{{thing.info}}</p>
-    </div>
-</div>
+<h2>Admin Panel</h2>
 
 <tabset>
 
     <tab ng-controller="adminSubjectsCtrl" heading="Subjects">
-        <div ng-include src="'/views/admin/adminSubjects.html'"></div>
+        <div ng-include src="'/views/admin/subjects/adminSubjects.html'"></div>
     </tab>
 
     <tab ng-controller="adminStudentsCtrl" heading="Students" class="container-fluid">
-
         <div ng-include src="'/views/admin/students/adminStudents.html'"></div>
-
-        <h2>Add Student</h2>
-
-        <div class="row">
-            <div class="col-sm-3">
-                <form class="form-horizontal">
-                    <h3>Student</h3>
-
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Name"
-                               ng-model="newStudent.fname">
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Middle Name" ng-model="newStudent.midname">
-                    </div>
-                    <div class="form-group"><input type="text" class="form-control" placeholder="Surname"
-                                                   ng-model="newStudent.surname">
-                    </div>
-                    <div class="form-group"><input type="email" class="form-control" placeholder="Email"
-                                                   ng-model="newStudent.email">
-                    </div>
-
-                    <div class="form-group btn-group">
-                        <button type="button" class="btn btn-default" ng-model="newStudent.sex" btn-radio="'male'">Male
-                        </button>
-                        <button type="button" class="btn btn-default" ng-model="newStudent.sex" btn-radio="'female'">
-                            Female
-                        </button>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" size="10" maxlength="10" placeholder="EGN"
-                               ng-model="newStudent.egn">
-                    </div>
-                    <div class="form-group">
-                        <input type="number" class="form-control" placeholder="Student Number"
-                               ng-model="newStudent.studentNumber">
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="City"
-                               ng-model="newStudent.city">
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Address"
-                               ng-model="newStudent.address">
-                    </div>
-                    <div class="form-group">
-                        <input type="tel" class="form-control" placeholder="Mobile"
-                               ng-model="newStudent.mobile">
-                    </div>
-                    <div class="form-group">
-                        <button type="button" class="btn btn-success clea" ng-click="addStudent()">Add Student</button>
-                    </div>
-                </form>
-            </div>
-
-            <div class="col-sm-4">
-                <h3>Parents</h3>
-
-                <form class="form-horizontal">
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Name" ng-model="newParent.name">
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Middle Name" ng-model="newParent.midname">
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Surname" ng-model="newParent.surname">
-                    </div>
-
-                    <div class="form-group btn-group">
-                        <button type="button" class="btn btn-default" ng-model="newParent.sex" btn-radio="'male'">Male
-                        </button>
-                        <button type="button" class="btn btn-default" ng-model="newParent.sex" btn-radio="'female'">
-                            Female
-                        </button>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="City" ng-model="newParent.city">
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Address" ng-model="newParent.city">
-                    </div>
-                    <div class="form-group">
-                        <input type="tel" class="form-control" placeholder="Mobile" ng-model="newParent.mobile">
-                    </div>
-                </form>
-            </div>
-        </div>
+        <div ng-include src="'/views/admin/students/partials/addStudent.html'"></div>
     </tab>
 </tabset>

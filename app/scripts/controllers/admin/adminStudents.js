@@ -3,24 +3,17 @@ myAppControllers.controller('adminStudentsCtrl', ['$scope', 'syncData', '$http',
 
         $scope.students = syncData('app/students', 0);
         $scope.p_students = syncData('pending/students', 0);
+        $scope.newStudent = {};
 
         $scope.maxSize = 4;
         $scope.curStudent = null;
         $scope.bigTotalItems = null;
-
- /*       $scope.students.$on("loaded", function (snapshot) {
-            console.log(Object.keys(snapshot).length);
-            $scope.bigTotalItems = Object.keys(snapshot).length;
-        });
-        */
+        $scope.bigCurrentPage = 1;
 
         $scope.students.$on("value", function (snapshot) {
 
             $scope.bigTotalItems = $scope.students.$getIndex().length;
         });
-
-
-        $scope.bigCurrentPage = 1;
 
         $scope.curStudentNav = function (key) {
             $scope.curStudentKey = key;
@@ -34,12 +27,9 @@ myAppControllers.controller('adminStudentsCtrl', ['$scope', 'syncData', '$http',
             $scope.currentPage = pageNo;
         };
 
-        $scope.hello = function (key) {
-            return $scope.students.$child(key);
-        }
+
 
         $scope.addStudent = function () {
-            console.log($scope.newStudent);
             if ($scope.newStudent !== null) {
                 $scope.p_students.$add(
                     {
@@ -55,14 +45,24 @@ myAppControllers.controller('adminStudentsCtrl', ['$scope', 'syncData', '$http',
                         mobile: $scope.newStudent.mobile,
                         //  parent: $scope.newStudent.parent
                     }
+
+
                 );
 
 
                 //    $scope.subjects[$scope.newSubject.code] = {caption: $scope.newSubject.caption};
 //            $scope.subjects.$save();
-                $scope.newStudent = null;
+                $scope.newStudent = {};
             }
         }
         /****************************************************************************************/
+
+        $scope.saveStudent = function() {
+            $scope.p_students.$add({appId: $scope.curStudent.$id, student: $scope.curStudent});
+        }
+
+        $scope.deleteStudent = function() {
+            $scope.students.$remove($scope.curStudent.$id);
+        }
 
     }]);
